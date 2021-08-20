@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 
 
-@Component
-public class Code {
+public class Code implements Comparable<Code>{
+
     private String code = """
             public static void main(String[] args) {
                     SpringApplication.run(CodeSharingPlatform.class, args);
@@ -31,7 +31,7 @@ public class Code {
         return String.format(result, date.toString(), code);
     }
 
-    public String returnHtmlForInput() {
+    public static String returnHtmlForInput() {
         return """
                 <html>
                 <head>
@@ -65,4 +65,9 @@ public class Code {
         date = LocalDateTime.now().withNano(0);
     }
 
+
+    @Override
+    public int compareTo(Code otherObject) {
+        return date.compareTo(otherObject.getDate()) * -1;
+    }
 }
