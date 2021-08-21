@@ -19,9 +19,9 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter:2.5.3'
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
-	implementation 'org.projectlombok:lombok:1.18.16'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 	implementation 'org.json:json:20171018'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

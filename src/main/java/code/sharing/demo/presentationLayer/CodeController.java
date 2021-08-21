@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.Collections;
 import java.util.List;
 
 
-@RestController
+@Controller
+//@RestController
 public class CodeController {
 
 
@@ -21,7 +23,7 @@ public class CodeController {
 
     List<Code> allCodes = new ArrayList<>();
 
-
+    @ResponseBody
     @GetMapping("/api/code/{N}")
     public ResponseEntity<Code> getJsonCode(@PathVariable int N) {
 //        System.out.println("\n\n\nAPI CODE");
@@ -30,20 +32,25 @@ public class CodeController {
     }
 
     @GetMapping("/code/{N}")
-    public ResponseEntity<String> getHtmlCode(@PathVariable int N, Model model) {
+    public String getHtmlCode(@PathVariable int N, Model model) {
 //        System.out.println("\n\n\nCODE");
         responseHeaders.set("Content-Type", "text/html");
         model.addAttribute("code", allCodes.get(N - 1));
-        return ResponseEntity.ok().headers(responseHeaders).body("codePresent");
+//        return ResponseEntity.ok().headers(responseHeaders).body("codePresent");
+        return "codePresent";
     }
 
+    @ResponseBody
     @PostMapping("/api/code/new")
-    public ResponseEntity<JSONObject> postApiCode(@RequestBody Code code) {
+    public ResponseEntity<String> postApiCode(@RequestBody Code code) {
+//        System.out.println("\n\n\n1");
         allCodes.add(code);
+//        System.out.println("\n\n\n2");
         responseHeaders.set("Content-Type", "application/json");
         JSONObject responseBody = new JSONObject();
-        responseBody.put("id", allCodes.size());
-        return ResponseEntity.ok().headers(responseHeaders).body(responseBody);
+        responseBody.put("id", String.valueOf(allCodes.size()));
+//        System.out.println("\n\n\n3");
+        return ResponseEntity.ok().headers(responseHeaders).body(responseBody.toString());
     }
 
     @GetMapping("/code/new")
@@ -52,6 +59,7 @@ public class CodeController {
         return ResponseEntity.ok().headers(responseHeaders).body(Code.returnHtmlForInput());
     }
 
+    @ResponseBody
     @GetMapping("/api/code/latest")
     public ResponseEntity<List<Code>> latestCodes() {
         responseHeaders.set("Content-Type", "application/json");
@@ -59,10 +67,11 @@ public class CodeController {
     }
 
     @GetMapping("/code/latest")
-    public ResponseEntity<String> latestCodesHtml(Model model) {
+    public String latestCodesHtml(Model model) {
         model.addAttribute("allCodes", getLatestItems());
         responseHeaders.set("Content-Type", "text/html");
-        return ResponseEntity.ok().headers(responseHeaders).body("allCodes");
+//        return ResponseEntity.ok().headers(responseHeaders).body("allCodes");
+        return "allCodes";
     }
 
     public List<Code> getLatestItems() {

@@ -65,6 +65,10 @@ public class Code implements Comparable<Code>{
         date = LocalDateTime.now().withNano(0);
     }
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
 
     @Override
     public int compareTo(Code otherObject) {

@@ -1,6 +1,6 @@
-<html>
+<html lang="en">
 <head>
-    <title>Code</title>
+    <title>Latest</title>
 </head>
 <body>
     <#list allCodes as code>
